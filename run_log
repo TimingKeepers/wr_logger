@@ -192,7 +192,20 @@ temp_range_check()
 	fi
 }
 
-# -------------------------------------------------------------------
+# -----------------------------------------------------
+# Check the synchronization status of the WRS
+
+sync_check()
+{
+	wrs_servo=$(wrs_cmd "/wr/bin/wr_mon -we")
+	wrs_servo=$(echo $wrs_servo | grep -oh "lock:[0-1]")
+	wrs_TF=$(wrs_cmd "/wr/bin/wr_mon -we")
+	wrs_TF=$(echo $wrs_TF | grep -oh "ss:.[A-Z_]\{11\}." | cut -d':' -f2)
+	
+	echo "$wrs_servo sync:$wrs_TF"
+}
+
+# -------------------------------------------
 
 # Run the test using a ssh connection
 test()
