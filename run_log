@@ -318,28 +318,32 @@ while [ $# -gt 0 ]; do # Until you run out of parameters . . .
   shift   # Check next set of parameters.
 done
 
+# Main script -------------------------------
+
 if [ $CONN == "ssh" ]; then
   echo -e "\033[1mRunning test over ssh\n\033[0m"
   if [ $INTERVAL != "x" ]; then
     while true
     do
-      runsshtest
+      test
       sleep $INTERVAL
     done
   fi
-  runsshtest
+  test
   ctrl_c
-elif [ $CONN == "ethbone" ]; then
-  echo -e "\033[1mRunning test over Etherbone\n\033[0m"
-  if [ $INTERVAL != "x" ]; then
-    while true
-    do
-      runethtest
-      sleep $INTERVAL
-    done
-  fi
-  runethtest
-  ctrl_c
-else
-  echo -e "\033[31Invalid connection seleted, valid types are: ssh or eth\n\033[0m"
 fi
+  
+# elif [ $CONN == "ethbone" ]; then
+  # echo -e "\033[1mRunning test over Etherbone\n\033[0m"
+  # if [ $INTERVAL != "x" ]; then
+    # while true
+    # do
+      # runethtest
+      # sleep $INTERVAL
+    # done
+  # fi
+  # runethtest
+  # ctrl_c
+# else
+  # echo -e "\033[31Invalid connection seleted, valid types are: ssh or eth\n\033[0m"
+# fi
