@@ -18,6 +18,9 @@
 ## will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 ################################################################################
 
+# How to interface with the WR device under test
+CONN=ssh
+
 # Enable verbose message output from the script
 VERBOSE_MSG=0
 
@@ -44,7 +47,14 @@ OVENSWITCH="OFF"
 
 SYNC="OFF"
 
-# Temerature control ----
+#Raspberry GPIO number for oven Switchoff
+GPIOVEN=17
+
+#Intervale time
+INTERVAL='x'
+
+
+# Temperature control ----
 
 # ENABLE TEMP LOG
 TEMP="OFF"
