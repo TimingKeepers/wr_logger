@@ -136,6 +136,20 @@ wrs_version()
 }
 
 # -------------------------------------------
+# Function to get temperature from external sensors (1W) and
+# from the FPGA & PLL of the WRS (wr_mon)
+
+temp_check()
+{
+    search_tsensors
+    cur_temp=$(read_tsensors)
+    wrs_temp=$(wrs_cmd "/wr/bin/wr_mon -wt")
+    wrs_temp=$(echo $wrs_temp | grep -oh "FPGA.* PLL: [0-9]*.[0-9]*")
+    #wrs_temp=$(echo -e "${wrs_temp}" | tr -d '[:space:]')
+    echo "$cur_temp$wrs_temp"
+}
+
+# -------------------------------------------
 
 # Run the test using a ssh connection
 test()
@@ -164,21 +178,6 @@ test()
 
 # -------------------------------------------
 
-temp_check()
-{
-    search_tsensors
-    cur_temp=$(read_tsensors)
-    wrs_temp=$(wrs_cmd "/wr/bin/wr_mon -wt")
-    wrs_temp=$(echo $wrs_temp | grep -oh "FPGA.* PLL: [0-9]*.[0-9]*")
-    #wrs_temp=$(echo -e "${wrs_temp}" | tr -d '[:space:]')
-    echo "$cur_temp$wrs_temp"
-}
-
-# -------------------------------------------
-
-temp_check
-
-exit 0
 
 ctrl_c()
 {
